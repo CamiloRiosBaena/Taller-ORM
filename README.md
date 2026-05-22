@@ -1,98 +1,152 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Biblioteca Digital — Taller ORM
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API REST para gestión de una biblioteca digital construida con **NestJS + TypeORM + PostgreSQL (Supabase)**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## Requisitos previos
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Node.js v18 o superior
+- npm
+- Proyecto creado en [Supabase](https://supabase.com)
 
-## Project setup
+---
+
+## Instalación y configuración
+
+### 1. Instalar dependencias
 
 ```bash
-$ npm install
+npm install
 ```
 
-## Compile and run the project
+### 2. Configurar variables de entorno
+
+Copia el archivo de ejemplo y completa con tus credenciales de Supabase:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+cp .env.example .env
 ```
 
-## Run tests
+Los datos de conexión se encuentran en tu proyecto de Supabase en:
+**Settings → Database → Session Pooler**
+
+```env
+DB_HOST=aws-1-us-east-2.pooler.supabase.com
+DB_PORT=5432
+DB_USERNAME=postgres.tu_project_ref
+DB_PASSWORD=tu_password
+DB_NAME=postgres
+DB_SSL=true
+PORT=3001
+```
+
+### 3. Crear las tablas (migraciones)
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run migration:run
 ```
 
-## Deployment
+Esto crea en orden: `autores` → `usuarios` → `libros` → `libros_autores` → `prestamos`, y carga los datos de prueba (seed).
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 4. Iniciar el servidor
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm run start:dev
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+---
 
-## Resources
+## Documentación interactiva (Swagger)
 
-Check out a few resources that may come in handy when working with NestJS:
+Con el servidor corriendo, abre en el navegador:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```
+http://localhost:3001/docs
+```
 
-## Support
+Desde ahí podés probar todos los endpoints sin necesidad de Postman.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+---
 
-## Stay in touch
+## Endpoints disponibles
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Autores
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| GET | `/autores` | Listar todos |
+| GET | `/autores/:id` | Obtener uno |
+| POST | `/autores` | Crear |
+| PUT | `/autores/:id` | Actualizar |
+| DELETE | `/autores/:id` | Eliminar |
 
-## License
+### Libros
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| GET | `/libros` | Listar activos (con autores, sin N+1) |
+| GET | `/libros/:id` | Obtener uno |
+| POST | `/libros` | Crear con autores |
+| PUT | `/libros/:id` | Actualizar |
+| DELETE | `/libros/:id` | Eliminar |
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Usuarios
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| GET | `/usuarios` | Listar todos |
+| GET | `/usuarios/:id` | Obtener uno |
+| POST | `/usuarios` | Crear |
+| PUT | `/usuarios/:id` | Actualizar |
+| DELETE | `/usuarios/:id` | Eliminar |
+
+### Préstamos
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| GET | `/prestamos` | Listar todos |
+| GET | `/prestamos/activos` | Solo préstamos sin devolver |
+| GET | `/prestamos/:id` | Obtener uno |
+| POST | `/prestamos` | Crear préstamo (transacción atómica) |
+| PATCH | `/prestamos/:id/devolucion` | Registrar devolución (transacción atómica) |
+
+---
+
+## Estructura del proyecto
+
+```
+src/
+├── app.module.ts              # Módulo raíz con TypeORM + ConfigModule
+├── main.ts                    # Bootstrap con ValidationPipe y Swagger
+├── data-source.ts             # Configuración para CLI de migraciones
+├── migrations/
+│   ├── ...-CreateBibliotecaSchema.ts   # Crea todas las tablas
+│   └── ...-SeedData.ts                 # Datos de prueba iniciales
+├── autores/                   # Entidad + CRUD
+├── libros/                    # Entidad + CRUD + validación ISBN
+├── usuarios/                  # Entidad + CRUD + validación email
+└── prestamos/                 # Entidad + transacciones atómicas
+```
+
+---
+
+## Requisitos del taller cubiertos
+
+| Requisito | Descripción | Estado |
+|-----------|-------------|--------|
+| R1 | Mapeo de entidades con tipos y constraints | ✅ |
+| R2 | Relación N:M `Libro↔Autor` + N:1 hacia `Prestamo` | ✅ |
+| R3 | Migraciones en orden correcto de dependencias | ✅ |
+| R4 | 5 operaciones CRUD requeridas | ✅ |
+| R5 | Transacciones atómicas con rollback | ✅ |
+| R6 | Validaciones: copias ≥ 0, ISBN único, no prestar sin copias | ✅ |
+| R7 | Seed: 3 autores, 5 libros, 2 usuarios, 2 préstamos | ✅ |
+
+---
+
+## Scripts disponibles
+
+```bash
+npm run start:dev       # Servidor en modo desarrollo (hot reload)
+npm run build           # Compilar a JavaScript
+npm run migration:run   # Ejecutar migraciones pendientes
+npm run migration:revert # Revertir última migración
+npm run migration:show  # Ver estado de las migraciones
+```
