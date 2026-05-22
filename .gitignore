@@ -1,0 +1,21 @@
+# Dependencias
+node_modules/
+
+# Compilado
+dist/
+
+# Variables de entorno (contiene credenciales — NO subir)
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Source maps
+*.js.map
+
+# Editor
+.vscode/
+.idea/
