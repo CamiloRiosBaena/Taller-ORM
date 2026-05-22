@@ -22,13 +22,13 @@ npm install
 
 ### 2. Configurar variables de entorno
 
-Copia el archivo de ejemplo y completa con tus credenciales de Supabase:
+Copiar el archivo de ejemplo y completar con las credenciales de Supabase:
 
 ```bash
 cp .env.example .env
 ```
 
-Los datos de conexión se encuentran en tu proyecto de Supabase en:
+Los datos de conexión se encuentran en el proyecto de Supabase en:
 **Settings → Database → Session Pooler**
 
 ```env
@@ -108,45 +108,3 @@ Desde ahí podés probar todos los endpoints sin necesidad de Postman.
 | PATCH | `/prestamos/:id/devolucion` | Registrar devolución (transacción atómica) |
 
 ---
-
-## Estructura del proyecto
-
-```
-src/
-├── app.module.ts              # Módulo raíz con TypeORM + ConfigModule
-├── main.ts                    # Bootstrap con ValidationPipe y Swagger
-├── data-source.ts             # Configuración para CLI de migraciones
-├── migrations/
-│   ├── ...-CreateBibliotecaSchema.ts   # Crea todas las tablas
-│   └── ...-SeedData.ts                 # Datos de prueba iniciales
-├── autores/                   # Entidad + CRUD
-├── libros/                    # Entidad + CRUD + validación ISBN
-├── usuarios/                  # Entidad + CRUD + validación email
-└── prestamos/                 # Entidad + transacciones atómicas
-```
-
----
-
-## Requisitos del taller cubiertos
-
-| Requisito | Descripción | Estado |
-|-----------|-------------|--------|
-| R1 | Mapeo de entidades con tipos y constraints | ✅ |
-| R2 | Relación N:M `Libro↔Autor` + N:1 hacia `Prestamo` | ✅ |
-| R3 | Migraciones en orden correcto de dependencias | ✅ |
-| R4 | 5 operaciones CRUD requeridas | ✅ |
-| R5 | Transacciones atómicas con rollback | ✅ |
-| R6 | Validaciones: copias ≥ 0, ISBN único, no prestar sin copias | ✅ |
-| R7 | Seed: 3 autores, 5 libros, 2 usuarios, 2 préstamos | ✅ |
-
----
-
-## Scripts disponibles
-
-```bash
-npm run start:dev       # Servidor en modo desarrollo (hot reload)
-npm run build           # Compilar a JavaScript
-npm run migration:run   # Ejecutar migraciones pendientes
-npm run migration:revert # Revertir última migración
-npm run migration:show  # Ver estado de las migraciones
-```
